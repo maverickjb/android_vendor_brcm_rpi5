@@ -1,0 +1,13 @@
+soong_namespace {
+	imports: [
+	],
+}
+
+prebuilt_etc_xml {
+	name: "mapper.minigbm_gbm_mesa.xml",
+	owner: "brcm",
+	src: "proprietary/vendor/etc/vintf/manifest/mapper.minigbm_gbm_mesa.xml",
+	filename_from_src: true,
+	sub_dir: "vintf/manifest",
+	soc_specific: true,
+}
