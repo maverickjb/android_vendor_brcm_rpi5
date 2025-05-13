@@ -3,20 +3,237 @@ soong_namespace {
 	],
 }
 
-prebuilt_etc_xml {
-	name: "hwc3-drm.xml",
+cc_prebuilt_binary {
+    name: "android.hardware.composer.hwc3-service.drm",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [ "proprietary/vendor/bin/hw/android.hardware.composer.hwc3-service.drm" ],
+    init_rc: [ "proprietary/vendor/etc/init/hwc3-drm.rc" ],
+    vintf_fragments: [ "proprietary/vendor/etc/vintf/manifest/hwc3-drm.xml" ],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libdrm",
+        "libhardware",
+        "libhidlbase",
+        "liblog",
+        "libsync",
+        "libui",
+        "libutils",
+    ],
+}
+
+cc_prebuilt_binary {
+    name: "android.hardware.graphics.allocator-service.minigbm_gbm_mesa",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [ "proprietary/vendor/bin/hw/android.hardware.graphics.allocator-service.minigbm_gbm_mesa" ],
+    init_rc: [ "proprietary/vendor/etc/init/allocator.minigbm_gbm_mesa.rc" ],
+    vintf_fragments: [ "proprietary/vendor/etc/vintf/manifest/allocator.xml" ],
+    shared_libs: [
+        "android.hardware.graphics.allocator-V2-ndk",
+        "android.hardware.graphics.mapper@4.0",
+        "libbase",
+        "libbinder_ndk",
+        "libhidlbase",
+        "libminigbm_gralloc_gbm_mesa",
+        "libminigbm_gralloc4_utils_gbm_mesa",
+        "libcutils",
+        "libdmabufheap",
+        "libdrm",
+        "libgralloctypes",
+        "libnativewindow",
+        "libsync",
+        "liblog",
+    ],
+}
+
+cc_prebuilt_library_shared {
+    name: "libminigbm_gralloc_gbm_mesa",
 	owner: "brcm",
-	src: "proprietary/vendor/etc/vintf/manifest/hwc3-drm.xml",
-	filename_from_src: true,
-	sub_dir: "vintf/manifest",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm: {
+			srcs: ["proprietary/vendor/lib/libminigbm_gralloc_gbm_mesa.so"],
+		},
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/libminigbm_gralloc_gbm_mesa.so"],
+		},
+	},
+	compile_multilib: "both",
+	check_elf_files: false,
+	prefer: true,
 	soc_specific: true,
 }
 
-prebuilt_etc_xml {
-	name: "mapper.minigbm_gbm_mesa.xml",
+cc_prebuilt_library_shared {
+    name: "libminigbm_gralloc4_utils_gbm_mesa",
 	owner: "brcm",
-	src: "proprietary/vendor/etc/vintf/manifest/mapper.minigbm_gbm_mesa.xml",
-	filename_from_src: true,
-	sub_dir: "vintf/manifest",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/libminigbm_gralloc4_utils_gbm_mesa.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "mapper.minigbm_gbm_mesa",
+    relative_install_path: "hw",
+	owner: "brcm",
+    vintf_fragments: ["proprietary/vendor/etc/vintf/manifest/mapper.minigbm_gbm_mesa.xml"],
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/hw/mapper.minigbm_gbm_mesa.so"],
+		},
+	},
+    shared_libs: [
+        "android.hardware.graphics.allocator-V2-ndk",
+        "libminigbm_gralloc_gbm_mesa",
+    ],
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libgbm_mesa_wrapper",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/libgbm_mesa_wrapper.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libEGL_mesa",
+    relative_install_path: "egl",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/egl/libEGL_mesa.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libGLESv1_CM_mesa",
+    relative_install_path: "egl",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/egl/libGLESv1_CM_mesa.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libGLESv2_mesa",
+    relative_install_path: "egl",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/egl/libGLESv2_mesa.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libgallium_dri",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/libgallium_dri.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "dri_gbm",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/dri_gbm.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libgbm_mesa",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/libgbm_mesa.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "vulkan.broadcom",
+    relative_install_path: "hw",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/hw/vulkan.broadcom.so"],
+		},
+	},
+	check_elf_files: false,
+	prefer: true,
 	soc_specific: true,
 }
