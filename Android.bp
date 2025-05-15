@@ -237,3 +237,93 @@ cc_prebuilt_library_shared {
 	prefer: true,
 	soc_specific: true,
 }
+
+cc_prebuilt_library_shared {
+    name: "audio.primary.rpi",
+    relative_install_path: "hw",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm: {
+			srcs: ["proprietary/vendor/lib/hw/audio.primary.rpi.so"],
+		},
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/hw/audio.primary.rpi.so"],
+		},
+	},
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libtinyalsa",
+    ],
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "audio.primary.rpi_hdmi",
+    relative_install_path: "hw",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm: {
+			srcs: ["proprietary/vendor/lib/hw/audio.primary.rpi_hdmi.so"],
+		},
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/hw/audio.primary.rpi_hdmi.so"],
+		},
+	},
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libasound",
+    ],
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libasound",
+	owner: "brcm",
+	strip: {
+		none: true,
+	},
+	target: {
+		android_arm: {
+			srcs: ["proprietary/vendor/lib/libasound.so"],
+		},
+		android_arm64: {
+			srcs: ["proprietary/vendor/lib64/libasound.so"],
+		},
+	},
+	compile_multilib: "both",
+	check_elf_files: false,
+	prefer: true,
+	soc_specific: true,
+}
+
+cc_prebuilt_binary {
+    name: "android.hardware.health-service.rpi",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [ "proprietary/vendor/bin/hw/android.hardware.health-service.rpi" ],
+    init_rc: [ "proprietary/vendor/etc/init/android.hardware.health-service.rpi.rc" ],
+    vintf_fragments: [ "proprietary/vendor/etc/vintf/manifest/android.hardware.health-service.rpi.xml" ],
+    shared_libs: [
+        "android.hardware.health-V3-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+    ],
+    overrides: ["charger"],
+}
+
