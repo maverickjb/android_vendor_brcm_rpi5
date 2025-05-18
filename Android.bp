@@ -326,4 +326,3 @@ cc_prebuilt_binary {
     ],
     overrides: ["charger"],
 }
-
